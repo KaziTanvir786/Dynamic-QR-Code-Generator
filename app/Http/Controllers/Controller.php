@@ -33,11 +33,12 @@ class Controller extends BaseController
     {
         $data = [
             "subject"=>"Testing Mail",
-            "code" => 'AVC34D'
+            "code" => 'AVC34D',
+            "email" => 'mahmudur.rashid26@gmail.com'
             ];
           try
           {
-            Mail::to('mahmudur@appnap.io')->send(new VerificationMail($data));
+            Mail::to('mahmudur.rashid26@gmail.com')->send(new VerificationMail($data));
             return response()->json(['Great! Successfully send in your mail']);
           }
           catch(Exception $e)

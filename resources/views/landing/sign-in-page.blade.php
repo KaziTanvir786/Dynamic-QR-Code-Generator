@@ -18,7 +18,7 @@
                 <button type="submit" class="sign-in-btn btn btn-success">Sign in</button>
                 <hr>
                 <div class="bottom-links d-flex align-items-center justify-content-center">
-                    <p class="p-1 m-0">Forget password? <a href="">Reset</a></p>
+                    <p class="p-1 m-0">Forget password? <a href="{{route('reset-password')}}">Reset</a></p>
                     <p class="p-1 m-0">Not registered yet? <a href="{{route('register')}}">Sign up</a></p>
                 </div>
             </div>

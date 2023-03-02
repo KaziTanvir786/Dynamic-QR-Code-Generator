@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\VerificationMail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
@@ -39,6 +40,7 @@ class RegisterController extends Controller
             'email' => strtolower($request->input('email')),
             'phone' => strtolower($request->input('phone')),
             'password' => bcrypt($request->input('password')),
+            'registered_on' => Carbon::now(),
             'email_verification_token' => $token,
         ]);
         $this->sendProfileVerifyMailTo($user_email , $token);
@@ -49,8 +51,9 @@ class RegisterController extends Controller
     public function sendProfileVerifyMailTo($email , $code)
     {
         $data = [
-            "subject"=>"Verify your Email",
-            "code" => $code
+            'subject'   =>"Verify your Email",
+            'email'     => $email,
+            'code'      => $code
             ];
           try
           {
@@ -59,5 +62,42 @@ class RegisterController extends Controller
           catch(Exception $e)
           {
           }
+    }
+
+    public function verify_user($user_email , $token)
+    {
+        $checkUser = User::where('email' , '=' , $user_email)->first();
+        if($checkUser!=NULL)
+        {
+            if($checkUser->is_active == 1)
+            {
+                session()->flash('message', 'Your email has activated once. Try to reset.');
+                return redirect()->route('login');
+            }
+            else
+            {
+                if($checkUser->email_verification_token == $token)
+                {
+                    $data = [
+                        'is_active' => 1,
+                        'email_verified_at' => Carbon::now()->toDateTimeString(),
+                    ];
+                    User::where('email' , '=' , $user_email)->update($data);
+                    session()->flash('message', 'Your email has been successfully activated. Please wait to get activated by the admin.');
+                    return redirect()->route('login');
+                }
+                else
+                {
+                    session()->flash('message', 'Invalid Token. Try to reset your password.');
+                    return redirect()->route('login');
+                }
+            }
+        }
+        else
+        {
+            session()->flash('message', 'User not found. Please register first.');
+            return redirect()->route('login');
+        }
+        
     }
 }

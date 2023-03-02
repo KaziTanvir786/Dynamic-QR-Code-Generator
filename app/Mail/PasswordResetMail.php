@@ -9,10 +9,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerificationMail extends Mailable
+class PasswordResetMail extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $data=[];
     public function __construct($data)
     {
@@ -25,7 +24,7 @@ class VerificationMail extends Mailable
         $mailData['email'] = $this->data['email'];
         return $this->from('noreply@qrcode.co.ke', 'Global Technologies Ltd')
                     ->subject($this->data["subject"])
-                    ->view('mail.verify_mail' , $mailData)
+                    ->view('mail.password_reset_mail' , $mailData)
                     ->with("data",$this->data);
     }
 }

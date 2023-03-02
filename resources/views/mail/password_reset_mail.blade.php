@@ -32,17 +32,17 @@
     <body>
       <!-- <h1 style="color: red; text-align: center;">{{$code}}</h1>  -->
       <div class="contents">
-        <h1 class="center-text">Verify Your Email</h1>
+        <h1 class="center-text">Reset Your Password</h1>
         <p>
-          Welcome to Company!
+          Hey there,
           <br>
-          Please click the link below to verify your email address.
+          Please use the eight digit code to reset your password.
           <br>
-          If you did not sign up to Company, please ignore this email or contuct us at contact@qrcode.co.ke
+          If you did not apply to reset password, please ignore this email or contuct us at contact@qrcode.co.ke
           <br><br>
           Web Support Team
           <br><br>
-          <a href="{{url('').'/verify-user/'.$email.'/'.$code}}" class="verification_button" target="_blank">Verify Email</a>
+          <a class="verification_button" target="_blank">{{$code}}</a>
         </p>
       </div>
     </body>
