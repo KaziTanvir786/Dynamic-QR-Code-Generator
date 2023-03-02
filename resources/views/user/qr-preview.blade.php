@@ -81,7 +81,17 @@
     new_element.innerHTML = '';
 
     var new_userInput = "<?php echo $qr->user_input; ?>";
-    var new_image = "{{ asset('') }}" + 'qr_icon/<?php echo $qr->user_id; ?>/<?php echo $qr->id; ?>/<?php echo $qr->logo_name; ?>';
+    var new_userInput = "<?php echo $qr->user_input; ?>";
+    var logoName = "<?php echo $qr->logo_name; ?>";
+    var new_image;
+    
+    if(logoName.length == 0){
+        new_image = null;
+    }
+    else{
+        new_image = "{{ asset('') }}" + 'qr_icon/<?php echo $qr->user_id; ?>/<?php echo $qr->id; ?>/<?php echo $qr->logo_name; ?>';
+    }
+    console.log(new_image);
     var new_inputDotColor = "<?php echo $qr->dot_color; ?>";
     var new_inputEyeColor = "<?php echo $qr->eye_color; ?>";
     var new_inputDotStyle = "<?php echo $qr->dot_style; ?>";
